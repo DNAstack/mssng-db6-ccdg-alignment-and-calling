@@ -82,7 +82,7 @@ workflow sentieon_ccdg_fastq_vcf {
   String memory = "55 GB"
   Int preemptible_tries = 2
   String sentieon_version = "201808.06"
-  String docker = "sentieon/sentieon-google-cloud:${sentieon_version}"
+  String docker = "dnastack/sentieon-google-cloud:${sentieon_version}"
   String sentieon_release_dir = "/opt/sentieon/sentieon-genomics-${sentieon_version}"
   
   call SentieonFastqToVcf {

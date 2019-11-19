@@ -24,7 +24,7 @@ Select `run_genotyper = false` to produce gVCFs for each sample (rather than gen
 
 ### 02_joint_genotype_by_region.wdl
 
-Joint genotype samples on a per-region basis. Use Sentieon's [`generate_shards.sh` script](https://support.sentieon.com/appnotes/distributed_mode/) (also found in the github repo: `docker/sentieon-bcftools\:201808.06/scripts/generate_shards.sh`) to generate region files from a reference genome index or dict using a specified region size (e.g. 50 million base pairs will split the genome into 65 shards). This workflow should then be run once per region. 
+Joint genotype samples on a per-region basis. Use Sentieon's [`generate_shards.sh` script](https://support.sentieon.com/appnotes/distributed_mode/) (also found in the github repo: `dockerfiles/sentieon-bcftools:201808.06/scripts/generate_shards.sh`) to generate region files from a reference genome index or dict using a specified region size (e.g. 50 million base pairs will split the genome into 65 shards). This workflow should then be run once per region. 
 
 `gvcf_URLs` is a file specifying the gs:// bucket locations of each of the gvcfs output by step 1 (one per line).
 
@@ -56,3 +56,9 @@ This will output one final, valid VCF per chromosome.
 
 Run once per VCF file output from step 05 to produce metrics on the final VCF.
 `region` is a string containing chromosome name (same as step05, e.g. `chr10`).
+
+
+
+## Notes
+
+For a small number of samples, (~30/9600) the memory for `01_fastq_to_gvcf_cram.wdl` needed to be increased (the process was killed during alignment). Upgrading to machine type n1-standard-64	(64 vCPUs, 240GB memory) was sufficient for these failing samples.
