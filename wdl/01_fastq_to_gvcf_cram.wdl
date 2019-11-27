@@ -204,6 +204,12 @@ workflow sentieon_ccdg_fastq_vcf {
     File is_plot = SentieonFastqToVcf.is_plot
     File stats = cramStats.stats
   }
+  
+  meta {
+    author: "Heather Ward"
+    email: "heather@dnastack.com"
+    description: "Data analysis pipeline used for converting fastqs to cram and gvcf for the MSSNG DB6 release"
+  }
 }
 
 
