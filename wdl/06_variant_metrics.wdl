@@ -4,9 +4,9 @@ workflow variantMetrics {
 	String joint_sample_name
 	String region
 
-	File ref_dict = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dict"
-	File dbsnp_vcf = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
-	File dbsnp_vcf_index = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
+	File ref_dict
+	File dbsnp_vcf
+	File dbsnp_vcf_index
 
 	String docker = "dnastack/picard_samtools:2.18.9"
 
@@ -26,6 +26,13 @@ workflow variantMetrics {
 		File summary_metrics_file = runVariantMetrics.summary_metrics_file
 		File detail_metrics_file = runVariantMetrics.detail_metrics_file
 	}
+
+	meta {
+    author: "Heather Ward"
+    email: "heather@dnastack.com"
+    description: "## MSSNG DB6 Variant Metrics\n\nRun once per VCF file output from step 05 to produce metrics on the final VCF.
+`region` is a string containing chromosome name (same as step05, e.g. `chr10`).\n\n"
+  }
 
 }
 

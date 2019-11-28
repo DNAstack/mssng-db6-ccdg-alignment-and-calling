@@ -5,27 +5,27 @@ workflow mergeMain {
     String joint_samplename
     
     # Known sites
-    File dbsnp_vcf = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
-    File dbsnp_index = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
-    File ref_alt = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.alt"
-    File ref_fasta = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta"
-    File ref_fasta_index = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
-    File ref_dict = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dict"
-    File ref_bwt = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.bwt"
-    File ref_sa = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.sa"
-    File ref_amb = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.amb"
-    File ref_ann = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.ann"
-    File ref_pac = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.pac"
-    File mills_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-    File mills_vcf_index  =  "gs://genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi"
-    File hapmap_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz"
-    File hapmap_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi"
-    File omni_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_omni2.5.hg38.vcf.gz"
-    File omni_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_omni2.5.hg38.vcf.gz.tbi"
-    File onekg_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
-    File onekg_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi"
-    File axiom_poly_vcf = "gs://genomics-public-data/resources/broad/hg38/v0/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz"
-    File axiom_poly_vcf_index = "gs://genomics-public-data/resources/broad/hg38/v0/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz.tbi"
+    File dbsnp_vcf
+    File dbsnp_index
+    File ref_alt
+    File ref_fasta
+    File ref_fasta_index
+    File ref_dict
+    File ref_bwt
+    File ref_sa
+    File ref_amb
+    File ref_ann
+    File ref_pac
+    File mills_vcf
+    File mills_vcf_index
+    File hapmap_vcf
+    File hapmap_vcf_index
+    File omni_vcf
+    File omni_vcf_index
+    File onekg_vcf
+    File onekg_vcf_index
+    File axiom_poly_vcf
+    File axiom_poly_vcf_index
 
     # Sentieon License configuration
     File? sentieon_license_file
@@ -116,6 +116,12 @@ workflow mergeMain {
         File recal_vcf_full_index = VQSR.vqsr_VCF_index
         File vqsr_plot = VQSR.vqsr_plot
     }
+
+    meta {
+    author: "Heather Ward"
+    email: "heather@dnastack.com"
+    description: "## MSSNG DB6 VQSR\n\nPerform VQSR on the `GVCFtyper_main` files - they will be combined into a single file, VQSR performed, and then re-split by chromosome. All chromosome `GVCFtyper_main` files should be input here, and one `GVCFtyper_main.recal` recalibrated main file per chromosome will be output. Also input the `chr__.bed` region files from the previous step.\n\n#### Running Sentieon\n\nIn order to use Sentieon, you must possess a license, distributed as either a key, a server, or a gcp project. The license may be attained by contacting Sentieon, and must be passed as an input to this workflow."
+  }
 }
 
 task mergeVCFs {
