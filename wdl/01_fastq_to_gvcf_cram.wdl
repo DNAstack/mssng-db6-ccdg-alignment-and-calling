@@ -7,29 +7,29 @@ workflow sentieon_ccdg_fastq_vcf {
   String sample_name
 
   # Known sites
-  File dbsnp_vcf = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
-  File dbsnp_index = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf.idx"
-  File ref_alt = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.alt"
-  File ref_fasta = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta"
-  File ref_fasta_index = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.fai"
-  File ref_dict = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.dict"
-  File ref_bwt = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.bwt"
-  File ref_sa = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.sa"
-  File ref_amb = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.amb"
-  File ref_ann = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.ann"
-  File ref_pac = "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.fasta.64.pac"
-  File mills_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-  File mills_vcf_index  =  "gs://genomics-public-data/resources/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi"
-  File hapmap_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz"
-  File hapmap_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/hapmap_3.3.hg38.vcf.gz.tbi"
-  File omni_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_omni2.5.hg38.vcf.gz"
-  File omni_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_omni2.5.hg38.vcf.gz.tbi"
-  File onekg_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz"
-  File onekg_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi"
-  File onekg_indel_vcf =  "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz"
-  File onekg_indel_vcf_index =  "gs://genomics-public-data/resources/broad/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz.tbi"
-  File axiom_poly_vcf = "gs://genomics-public-data/resources/broad/hg38/v0/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz"
-  File axiom_poly_vcf_index = "gs://genomics-public-data/resources/broad/hg38/v0/Axiom_Exome_Plus.genotypes.all_populations.poly.hg38.vcf.gz.tbi"
+  File dbsnp_vcf
+  File dbsnp_index
+  File ref_alt
+  File ref_fasta
+  File ref_fasta_index
+  File ref_dict
+  File ref_bwt
+  File ref_sa
+  File ref_amb
+  File ref_ann
+  File ref_pac
+  File mills_vcf
+  File mills_vcf_index
+  File hapmap_vcf
+  File hapmap_vcf_index
+  File omni_vcf
+  File omni_vcf_index
+  File onekg_vcf
+  File onekg_vcf_index
+  File onekg_indel_vcf
+  File onekg_indel_vcf_index
+  File axiom_poly_vcf
+  File axiom_poly_vcf_index
  
   Array[File] bqsr_vcfs = [dbsnp_vcf,mills_vcf,onekg_indel_vcf] 
   Array[File] bqsr_tbis = [dbsnp_index,mills_vcf_index,onekg_indel_vcf_index]
@@ -42,12 +42,12 @@ workflow sentieon_ccdg_fastq_vcf {
   Boolean output_gvcf = true
   Boolean output_vcf = true
   ## BQSR intervals
-  String bqsr_intervals = "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22"
+  String bqsr_intervals
   ## Readwriter read_filter args, starting after the QualCalFilter table
   String readwriter_readfilter_args = ",prior=-1.0,indel=false,levels=10/20/30,min_qual=6"
   ## Variant calling algorithm
   String calling_algo = "Haplotyper"
-  String calling_intervals = "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX,chrY"
+  String calling_intervals
   ## Extra driver parameters
   String lc_driver_args = "--traverse_param=200000/10000"
   String dedup_driver_args = "--traverse_param=200000/10000"
@@ -208,7 +208,7 @@ workflow sentieon_ccdg_fastq_vcf {
   meta {
     author: "Heather Ward"
     email: "heather@dnastack.com"
-    description: "Data analysis pipeline used for converting fastqs to cram and gvcf for the MSSNG DB6 release"
+    description: "## MSSNG DB6 CCDG Compliant Data Analysis Pipeline\n\nThis pipeline was used for the analysis of the MSSNG autism cohort for the [DB6 release](https://research.mss.ng/release-notes/2019-10-16). The pipeline is written and optimized to run on GCP and currently will not run in other cloud or local environments. \n\n### Inputs\n\nThe pipeline will take paired end FASTQ files and perform sequence alignment using BWA and [Sentieon](https://www.sentieon.com), followed by variant calling using Sentieon as well. (G)VCF and CRAM files will be generated. Select `run_genotyper = false` to produce gVCFs for each sample (rather than genotyping single samples) or `run_genotyper=true` to output a single called VCF.\n\n### Outputs\n\nThe pipeline will output alignment files in the `CRAM` format, variant files in the GVCF formant and and various statistics and qual files on the data\n\n###Steps\n\n1. Alignment with BWA\n2. Mark duplicates with SamBlaster\n3. Sort the alignment with Sentieon\n4. Generate alignment and Deduplication statistics\n5. Perform Deduplication with Sentieon and output a cram or bam file\n6. Plot various metrics with Sentieon\n7.Do BQSR with Sentieon\n8.Call Variants Outputting either a GVCF or a Genotyped VCF file\n9. Generate statistics on the genereated vcf\n\n### Sentieon Requirements\n\n Sentieon is a licensed software which implements the same algorithms used by GATK in highly performant way. Mean runtime of this pipeline across ~10,000 samples was just over 3 hours.\n\n#### Running Sentieon\n\nIn order to use Sentieon, you must possess a license, distributed as either a key, a server, or a gcp project. The license may be attained by contacting Sentieon, and must be passed as an input to this workflow."
   }
 }
 
